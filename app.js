@@ -6,7 +6,8 @@ const
 	echo = require('./echo'),
 	https = require('https'),
 	request = require('request'),
-	findMyIphone = require('./find-my-iphone');
+	findMyIphone = require('./find-my-iphone'),
+	stamplay = require('./stamplay');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -35,9 +36,15 @@ app.post('/api/v1/echo', function(req, res) {
 			if (deviceInfo.type === "Apple") {
 				findMyIphone.getDeviceByModel(deviceInfo.model).then(device => {
 
+					stamplay.getOrCreateSession(req.body.session).then(session => {
+						stamplay.saveLatestDeviceForUser(session._id, device)
+					}).catch(err => {
+						console.log(err)
+					})
+
 					if (intent.name === 'FindMyDevice') {
 						findMyIphone.getDeviceLocation(device).then(location => {
-							echo.formatResponse("Your " + deviceInfo.model + " is at " + location + ". Would you like me to ring it?")
+							echo.formatResponse("Your " + deviceInfo.model + " is at " + location + ". If you want me to ring your " + deviceInfo.model + ", just say: Alexa, ask find my phone to alert my " + deviceInfo.model)
 								.then(response => {
 									res.send(response)
 								})
@@ -63,7 +70,7 @@ app.post('/api/v1/echo', function(req, res) {
 
 function verifyRequestSignature(req, res, buf) {
 	let requestedAppId = req.body.session.application.applicationId
-	let thisAppId = app.set('port', process.env.ECHO_APP_IP);
+	let thisAppId = app.set('port', process.env.ECHO_APP_ID);
   var signature = req.headers["x-hub-signature"];
 
   if (!signature) {
