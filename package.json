@@ -1,0 +1,21 @@
+{
+  "name": "echo-find-phone",
+  "version": "1.0.0",
+  "description": "find your iphone with amazon echo",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msolomonTMG/echo-find-my-phone.git"
+  },
+  "author": "Mike Solomon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msolomonTMG/echo-find-my-phone/issues"
+  },
+  "homepage": "https://github.com/msolomonTMG/echo-find-my-phone#readme"
+}
