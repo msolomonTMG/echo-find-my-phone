@@ -7,7 +7,8 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "find-my-iphone": "^1.1.1",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "stamplay": "^1.0.8"
   },
   "repository": {
     "type": "git",
